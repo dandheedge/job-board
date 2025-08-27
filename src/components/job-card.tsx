@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { MapPin, Building2, DollarSign } from 'lucide-react'
 import type { Job } from '@/lib/types'
 import { motion } from 'motion/react'
-import { cardVariants, buttonVariants, itemVariants } from './page-transition'
+import { buttonVariants } from './page-transition'
 
 interface JobCardProps {
   job: Job
@@ -42,13 +42,28 @@ export function JobCard({ job }: JobCardProps) {
 
   return (
     <motion.div
-      variants={itemVariants}
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: {
+            type: "spring",
+            stiffness: 300,
+            damping: 24
+          }
+        }
+      }}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
     >
       <motion.div
-        variants={cardVariants}
+        variants={{
+          rest: { scale: 1, y: 0 },
+          hover: { scale: 1.02, y: -2, transition: { type: "spring", stiffness: 300, damping: 24 } },
+          tap: { scale: 0.98, y: 2, transition: { type: "spring", stiffness: 300, damping: 24 } }
+        }}
         initial="rest"
         whileHover="hover"
         className="h-full"
